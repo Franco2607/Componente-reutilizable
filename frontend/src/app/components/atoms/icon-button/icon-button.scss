@@ -1,0 +1,27 @@
+.action-btn {
+    background: none;
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.1s, border-color 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    &:hover { 
+      background-color: #fdf2f2; 
+      border-color: #ffcccc;
+    }
+  
+    img {
+      width: 18px;
+      height: 18px;
+      opacity: 0.7;
+      transition: opacity 0.1s;
+    }
+  
+    &:hover img { 
+      opacity: 1; 
+    }
+  }
