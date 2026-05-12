@@ -1,12 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploadService, FileItem } from '../../upload.service';
-import { FileCardComponent } from '../../molecules/file-card/file-card';
 
 @Component({
   selector: 'app-upload-list',
   standalone: true,
-  imports: [CommonModule, FileCardComponent],
+  imports: [CommonModule],
   templateUrl: './upload-list.html',
   styleUrls: ['./upload-list.scss']
 })

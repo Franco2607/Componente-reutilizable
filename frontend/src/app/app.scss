@@ -1,0 +1,76 @@
+/* Contenedor gris de fondo para que resalte la card blanca */
+.main-container {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* LA CARD GRANDE (El contenedor blanco) */
+  .parent-card {
+    background: white;
+    width: 100%;
+    max-width: 900px;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Espacio entre las dos cards de adentro */
+  
+    @media (max-width: 600px) {
+      padding: 16px;
+      border-radius: 0; /* En móvil se ve mejor sin bordes redondeados gigantes */
+    }
+  }
+  
+  /* LAS CARDS PEQUEÑAS (Uploader e Historial) */
+  .child-card {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 20px;
+    
+    /* Sutil efecto de profundidad */
+    &:hover {
+      border-color: #d1d1d1;
+    }
+  }
+  
+  /* Ajustes para los iconos */
+  .icon-img {
+    width: 38px;
+    height: auto;
+  }
+  
+  .trash-img {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    &:hover { transform: scale(1.1); }
+  }
+  
+  .file-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    &:last-child { border-bottom: none; }
+  }
+  
+  .file-details {
+    flex: 1;
+    .file-name { font-weight: 500; font-size: 14px; display: block; }
+    .file-meta { font-size: 12px; color: #888; display: flex; align-items: center; gap: 5px; }
+  }
+  
+  .status-success {
+    color: #4CAF50;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 500;
+  }

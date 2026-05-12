@@ -1,0 +1,24 @@
+<div 
+  class="dropzone-box" 
+  [class.drag-active]="isDragging"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)">
+
+  <div class="icon-circle">
+    <app-upload-icon></app-upload-icon>
+  </div>
+
+  <h3 class="dropzone-title">Arrastra y suelta los archivos aquí</h3>
+  <p class="dropzone-subtitle">JPEG, PNG, PDF, hasta 5 MB.</p>
+
+  <button class="browse-btn" type="button" (click)="fileInput.click()">
+    Buscar archivos
+  </button>
+
+  <input 
+    type="file" 
+    #fileInput 
+    (change)="onFileSelected($event)" 
+    style="display: none;">
+</div>

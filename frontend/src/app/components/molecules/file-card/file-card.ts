@@ -8,7 +8,6 @@ import { FileItem } from '../../../components/upload.service';
 @Component({
   selector: 'app-file-card',
   standalone: true,
-  // ¡Aquí registramos los átomos para poder usarlos en el HTML!
   imports: [CommonModule, FileIcon, StatusBadge, IconButton],
   templateUrl: './file-card.html',
   styleUrls: ['./file-card.scss']
