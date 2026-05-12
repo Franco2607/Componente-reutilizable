@@ -1,0 +1,73 @@
+.dropzone-box {
+  background-color: #ffffff;
+  border: 1px dashed #c0c0c0;
+  border-radius: 8px;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 20px;
+
+  &.drag-active {
+    background-color: #f0f8ff;
+    border-color: #2196f3;
+  }
+
+  .icon-circle {
+    width: 60px;
+    height: 60px;
+    background-color: #e6f2ff; /* Azul clarito de fondo */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    /* Aseguramos que el átomo adentro no se desborde */
+    ::ng-deep app-upload-icon img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 0;
+    }
+  }
+
+  .dropzone-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 8px 0;
+  }
+
+  .dropzone-subtitle {
+    font-size: 14px;
+    color: #888;
+    margin: 0 0 24px 0;
+  }
+
+  .browse-btn {
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+  @media (max-width: 480px) {
+    padding: 24px 16px;
+    .dropzone-title {
+      font-size: 14px; /* Letra más pequeña en móvil */
+    }
+    .dropzone-subtitle {
+      font-size: 12px;
+    }
+  }
+}

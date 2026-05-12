@@ -1,34 +1,15 @@
-<div class="drop-zone" 
-     [class.dragging]="isDragging"
-     (dragover)="onDragOver($event)"
-     (dragleave)="onDragLeave()"
-     (drop)="onDrop($event)">
-  
-  <div class="icon-container">
-    <div class="upload-circle">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 3V15M12 3L8 7M12 3L16 7M4 17V21H20V17" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-  </div>
-  
-  <p class="title">Arrastra y suelta los archivos aquí</p>
-  <p class="subtitle">JPEG, PNG, PDF, hasta 5 MB.</p>
-  
-  <input type="file" #fileInput (change)="onFileSelected($event)" hidden>
-  <button class="btn-search" (click)="fileInput.click()">Buscar archivos</button>
+<div class="uploader-wrapper">
+  <app-dropzone (fileDropped)="onFileReceive($event)"></app-dropzone>
 
-  <div class="progress-wrapper" *ngIf="uploadProgress !== null">
-    <div class="progress-container">
-      <div class="progress-bar" [style.width.%]="uploadProgress"></div>
-    </div>
-    <span class="percentage">{{ uploadProgress }}%</span>
+  <div *ngIf="progress > 0 && !showSuccess" class="progress-wrapper">
+    <div class="progress-bar" [style.width.%]="progress"></div>
   </div>
 
-  <div class="success-message" *ngIf="uploadSuccess">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M13.3333 4L5.99996 11.3333L2.66663 8" stroke="#039855" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    Subida con éxito
+  <div *ngIf="showSuccess" class="success-box">
+    ¡Subido con éxito!
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
   </div>
 </div>

@@ -1,13 +1,27 @@
-<div class="list-container">
-  
-  <div *ngIf="files.length === 0" class="no-files-message">
-    No hay archivos aún.
+<div class="file-list-container">
+  <div class="file-item" *ngFor="let file of files">
+    
+    <div class="file-icon">
+      <img src="/Icon PDF.png" alt="File Icon" class="file-icon-img">
+    </div>
+
+    <div class="file-details">
+      <span class="file-name" [title]="file.originalName">{{ file.originalName }}</span>
+      <div class="file-meta">
+        <span class="file-size">{{ file.size }} de {{ file.size }}</span>
+        <span class="separator">•</span>
+        <span class="file-status success">
+          <svg class="check-icon" viewBox="0 0 24 24" width="14" height="14">
+            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          Completado
+        </span>
+      </div>
+    </div>
+
+    <button class="delete-btn" (click)="onDeleteFile(file.uniqueName)" title="Eliminar archivo">
+      <img src="/Icon Basurero.png" alt="Eliminar" class="delete-icon-img">
+    </button>
+    
   </div>
-
-  <app-file-card 
-    *ngFor="let f of files" 
-    [file]="f" 
-    (delete)="onDeleteFile($event)">
-  </app-file-card>
-
 </div>

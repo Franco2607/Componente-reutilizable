@@ -1,10 +1,97 @@
-.list-container {
+.file-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
+}
 
-  .no-files-message {
-    text-align: center;
-    font-size: 14px;
-    color: #888888;
-    padding: 20px;
+.file-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  gap: 16px;
+  box-sizing: border-box;
+
+  /* Responsive: En celulares reducimos los espacios */
+  @media (max-width: 480px) {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .file-icon {
+    flex-shrink: 0;
+    width: 40px; /* Tamaño del icono file */
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .file-icon-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .file-details {
+    flex-grow: 1;
+    min-width: 0; /* CRUCIAL para que el texto largo se corte */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .file-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; /* Pone "..." si el nombre es muy largo */
+    }
+
+    .file-meta {
+      font-size: 12px;
+      color: #777;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap; /* En celulares, si no cabe, pasa a la siguiente línea */
+    }
+
+    .file-status.success {
+      color: #4caf50;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+
+  .delete-btn {
+    flex-shrink: 0;
+    background: transparent;
+    border: none; /* Quitamos el borde genérico */
+    border-radius: 0; /* Quitamos el redondeado genérico */
+    width: 40px; /* Tamaño del botón papelera */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.05); /* Efecto de hover sutil */
+    }
+
+    .delete-icon-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
   }
 }

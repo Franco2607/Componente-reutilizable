@@ -1,97 +1,77 @@
-import { Component, ChangeDetectorRef, output, EventEmitter, Output } from '@angular/core';
+import { Component, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpEventType } from '@angular/common/http';
+import { UploadService } from '../../upload.service'; 
+import { Dropzone } from '../../molecules/dropzone/dropzone';
 
 @Component({
   selector: 'app-uploader',
-  standalone: true,
-  imports: [CommonModule],
+  standalone : true,
+  imports: [
+    CommonModule,
+    Dropzone
+  ],
   templateUrl: './uploader.html',
   styleUrls: ['./uploader.scss']
 })
 export class UploaderComponent {
-    @Output() fileUploaded = new EventEmitter<void>();
+  progress: number = 0;
+  errorMessage: string = '';
+  showSuccess: boolean = false;
+  private progressInterval: any;
 
-  isDragging = false;
-  uploadProgress: number | null = null;
-  uploadSuccess = false;
+  @Output() fileUploaded = new EventEmitter<void>();
 
   constructor(
-    private http: HttpClient, 
-    private cdr: ChangeDetectorRef // Aquí inyectamos el "avisador" de cambios
+    private uploadService: UploadService,
+    private cdr: ChangeDetectorRef
   ) {}
 
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = true;
-  }
+  onFileReceive(file: File) {
+    this.resetStatus();
 
-  onDragLeave() {
-    this.isDragging = false;
-  }
-
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-    this.isDragging = false;
-    const files = event.dataTransfer?.files;
-    if (files && files.length > 0) this.validateAndUpload(files[0]);
-  }
-
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {this.validateAndUpload(file);
-  }
-  event.target.value = '';
-}
-
-  private validateAndUpload(file: File) {
-    const allowed = ['image/jpeg', 'image/png', 'application/pdf'];
-    if (!allowed.includes(file.type) || file.size > 5 * 1024 * 1024) {
-      alert('Archivo no válido (Máximo 5MB)');
-      return;
-    }
-
-    this.uploadSuccess = false;
-    this.uploadProgress = 0;
-    this.cdr.detectChanges(); 
-
-    const interval = setInterval(() => {
-      if (this.uploadProgress !== null && this.uploadProgress < 90) {
-        this.uploadProgress += 5; 
+    this.progressInterval = setInterval(() => {
+      if (this.progress < 85) {
+        this.progress += 1;
         this.cdr.detectChanges();
       }
-    }, 100);
+    }, 50);
 
-    const formData = new FormData();
-    formData.append('file', file);
-
-    this.http.post('http://localhost:3000/uploads', formData).subscribe({
-      next: (response) => {
-        clearInterval(interval);   
-        this.uploadProgress = 100; 
-        this.cdr.detectChanges();  
-
-        this.fileUploaded.emit();
-
-        setTimeout(() => {
-          this.uploadProgress = null; 
-          this.uploadSuccess = true; 
+    this.uploadService.uploadFile(file).subscribe({
+      next: (event: any) => {
+        if (event.type === HttpEventType.Response) {
+          clearInterval(this.progressInterval);
+          this.progress = 100;
           this.cdr.detectChanges();
-
+          
           setTimeout(() => {
-            this.uploadSuccess = false;
+            this.showSuccess = true;
+            this.fileUploaded.emit();
             this.cdr.detectChanges();
-          }, 3000);
-        }, 600);
+
+            setTimeout(() => {
+              this.resetStatus();
+            }, 3000);
+          }, 300);
+        }
       },
-      error: (err) => {
-        clearInterval(interval);    
-        this.uploadProgress = null;  
-        this.uploadSuccess = false;
+      error: (err: any) => {
+        clearInterval(this.progressInterval);
+        this.errorMessage = 'Hubo un error al subir el archivo.';
+        this.progress = 0;
         this.cdr.detectChanges();
-        alert('Error en el servidor: No se pudo subir el archivo');
-        console.error(err);
       }
     });
+  }
+
+  private resetStatus() {
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
+    this.progress = 0;
+    this.showSuccess = false;
+    this.errorMessage = '';
+    this.cdr.markForCheck();
+    this.cdr.detectChanges();
   }
 }
