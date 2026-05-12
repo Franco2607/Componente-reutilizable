@@ -1,0 +1,13 @@
+<div class="list-container">
+  
+  <div *ngIf="files.length === 0" class="no-files-message">
+    No hay archivos aún.
+  </div>
+
+  <app-file-card 
+    *ngFor="let f of files" 
+    [file]="f" 
+    (delete)="onDeleteFile($event)">
+  </app-file-card>
+
+</div>

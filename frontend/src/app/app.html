@@ -1,3 +1,11 @@
-<div style="padding: 50px; display: flex; justify-content: center;">
-  <app-uploader></app-uploader>
+<div style="max-width: 550px; margin: 40px auto; display: flex; flex-direction: column; gap: 16px; font-family: 'Helvetica Neue', Arial, sans-serif;">
+  
+  <div style="font-size: 16px; font-weight: 600; color: #333;">
+    Certificado de pasado judicial <span style="color: #d32f2f;">*</span>
+  </div>
+    
+    <app-uploader (fileUploaded)="miLista.loadFiles()"></app-uploader>
+    
+    <app-upload-list #miLista></app-upload-list>
+
 </div>

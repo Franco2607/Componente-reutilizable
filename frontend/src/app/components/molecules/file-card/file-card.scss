@@ -1,0 +1,55 @@
+.file-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex; 
+    align-items: center;
+    margin-bottom: 12px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-color: #d0d0d0;
+    }
+  
+    .file-icon-container {
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .file-details {
+      flex-grow: 1;
+      
+      .file-name {
+        font-size: 14px;
+        font-weight: 500;
+        color: #222222;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 320px;
+      }
+  
+      .file-meta {
+        font-size: 12px;
+        color: #777777;
+        display: flex;
+        align-items: center;
+  
+        .divider { 
+          margin: 0 8px; 
+          color: #cccccc; 
+        }
+      }
+    }
+  
+    .file-actions {
+      display: flex;
+      align-items: center;
+      margin-left: 16px;
+    }
+  }

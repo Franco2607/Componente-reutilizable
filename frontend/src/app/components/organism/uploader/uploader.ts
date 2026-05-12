@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, output, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./uploader.scss']
 })
 export class UploaderComponent {
+    @Output() fileUploaded = new EventEmitter<void>();
+
   isDragging = false;
   uploadProgress: number | null = null;
   uploadSuccess = false;
@@ -37,8 +39,10 @@ export class UploaderComponent {
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
-    if (file) this.validateAndUpload(file);
+    if (file) {this.validateAndUpload(file);
   }
+  event.target.value = '';
+}
 
   private validateAndUpload(file: File) {
     const allowed = ['image/jpeg', 'image/png', 'application/pdf'];
@@ -47,33 +51,31 @@ export class UploaderComponent {
       return;
     }
 
-    // Inicializamos estados
     this.uploadSuccess = false;
     this.uploadProgress = 0;
-    this.cdr.detectChanges(); // Pintamos el inicio
+    this.cdr.detectChanges(); 
 
-    // LA ANIMACIÓN: Sube solita hasta el 90%
     const interval = setInterval(() => {
       if (this.uploadProgress !== null && this.uploadProgress < 90) {
         this.uploadProgress += 5; 
-        this.cdr.detectChanges(); // Avisamos a Angular que el número subió
+        this.cdr.detectChanges();
       }
     }, 100);
 
     const formData = new FormData();
     formData.append('file', file);
 
-    // LA PETICIÓN: Aquí esperamos la respuesta del Backend
     this.http.post('http://localhost:3000/uploads', formData).subscribe({
       next: (response) => {
-        // SI TODO SALE BIEN (El "Promise" se cumple)
-        clearInterval(interval);   // Apagamos el cronómetro
-        this.uploadProgress = 100;  // Saltamos al final
-        this.cdr.detectChanges();   // Pintamos el 100%
+        clearInterval(interval);   
+        this.uploadProgress = 100; 
+        this.cdr.detectChanges();  
+
+        this.fileUploaded.emit();
 
         setTimeout(() => {
-          this.uploadProgress = null; // Escondemos la barra
-          this.uploadSuccess = true;  // Mostramos el mensaje verde
+          this.uploadProgress = null; 
+          this.uploadSuccess = true; 
           this.cdr.detectChanges();
 
           setTimeout(() => {
@@ -83,8 +85,8 @@ export class UploaderComponent {
         }, 600);
       },
       error: (err) => {
-        clearInterval(interval);    // Apagamos el cronómetro
-        this.uploadProgress = null;  // Quitamos la barra
+        clearInterval(interval);    
+        this.uploadProgress = null;  
         this.uploadSuccess = false;
         this.cdr.detectChanges();
         alert('Error en el servidor: No se pudo subir el archivo');

@@ -1,0 +1,24 @@
+<div class="file-card">
+    <div class="file-icon-container">
+      <app-file-icon [mimetype]="file.mimetype"></app-file-icon>
+    </div>
+  
+    <div class="file-details">
+      <div class="file-name">{{ file.originalName }}</div>
+      
+      <div class="file-meta">
+        <span class="size">{{ file.size }} de {{ file.size }}</span> 
+        <span class="divider">•</span>
+        
+        <app-status-badge statusType="completed" text="Completado"></app-status-badge>
+      </div>
+    </div>
+  
+    <div class="file-actions">
+      <app-icon-button 
+        iconSrc="/Icon Basurero.png" 
+        altText="Eliminar" 
+        (clicked)="onDeleteClick()">
+      </app-icon-button>
+    </div>
+  </div>
