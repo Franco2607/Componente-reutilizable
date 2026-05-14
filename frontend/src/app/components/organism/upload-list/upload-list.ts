@@ -30,10 +30,6 @@ export class UploadList implements OnInit {
       error: (err) => console.error('Error al traer la lista', err)
     });
   }
-  getFileIcon(mimetype: string): string {
-    if (mimetype.includes('pdf')) return '/Icon PDF.png';
-    return 'Icon PDF.png'; 
-  }
   
   onDeleteFile(uniqueName: string) {
     this.uploadService.deleteFile(uniqueName).subscribe({
@@ -46,4 +42,19 @@ export class UploadList implements OnInit {
         alert('Error al borrar el archivo')
       }
   });
+  }
+  getFileIcon(fileName: string): string {
+    const extension = fileName.split('.').pop()?.toLowerCase();
+
+    switch (extension) {
+      case 'pdf':
+        return 'Icon PDF.png'
+      case 'png':
+        return 'Icon PNG.png';
+      case 'jpg':
+      case 'jpeg':
+        return 'Icon JPEG.png';
+      default:
+        return 'Icon PDF.png';
+    }
 }}
