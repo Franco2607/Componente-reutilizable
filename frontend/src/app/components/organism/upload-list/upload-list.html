@@ -2,7 +2,7 @@
   <div class="file-item" *ngFor="let file of files">
     
     <div class="file-icon">
-      <img src="/Icon PDF.png" alt="File Icon" class="file-icon-img">
+      <img [src]="getFileIcon(file.originalName)" alt="File Icon" class="file-icon-img">
     </div>
 
     <div class="file-details">
